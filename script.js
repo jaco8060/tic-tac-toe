@@ -37,7 +37,7 @@ function Cell() {
 }
 //runs the game logic
 
-function gameController(
+const gameController = (function (
   playerOneName = "Player One",
   playerTwoName = "Player Two"
 ) {
@@ -45,4 +45,26 @@ function gameController(
   const player2 = { playerName: playerTwoName, move: "O" };
 
   let activePlayer = player1;
-}
+
+  //function used to switch the current player turn
+  const switchPlayerTurn = () => {
+    if (activePlayer === player1) {
+      activePlayer = player2;
+    } else {
+      activePlayer = player1;
+    }
+  };
+
+  const getActivePlayer = () => console.log(activePlayer);
+
+  return { switchPlayerTurn, getActivePlayer };
+})();
+Gameboard.printBoard();
+gameController.getActivePlayer();
+gameController.switchPlayerTurn();
+gameController.getActivePlayer();
+//tic tac toe:
+
+// choose to be player 1 or player 2- player 1 is X and player 2 is O; player 1 goes first when they select a place to put an X, the cell object value should be X so Cell.Value(activePlayer.move).
+
+//
