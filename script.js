@@ -35,3 +35,14 @@ function Cell() {
   };
   return { getValue, playerMove };
 }
+//runs the game logic
+
+function gameController(
+  playerOneName = "Player One",
+  playerTwoName = "Player Two"
+) {
+  const player1 = { playerName: playerOneName, move: "X" };
+  const player2 = { playerName: playerTwoName, move: "O" };
+
+  let activePlayer = player1;
+}
