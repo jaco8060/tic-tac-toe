@@ -22,10 +22,14 @@ const Gameboard = (function () {
   //function for player making a move and the board updating:
 
   const playerMove = (row, column, player) => {
+    const availableCells = board
+      .filter((row) => row[column].getValue() === 0)
+      .map((row) => row[column]);
+
     if (board[row][column].getValue() === 0) {
       board[row][column].playerMove(player);
     } else {
-      return;
+      return -1;
     }
   };
 
@@ -78,16 +82,17 @@ const gameController = (function (
         getActivePlayer().playerName
       } has selected row ${row} and column ${column}`
     );
-    Gameboard.playerMove(row, column, getActivePlayer());
-
-    switchPlayerTurn();
-    printNewRound();
+    //check if its a valid move
+    if (Gameboard.playerMove(row, column, getActivePlayer()) != -1) {
+      switchPlayerTurn();
+      printNewRound();
+    }
   };
 
   return { getActivePlayer, playRound };
 })();
 gameController.playRound(0, 0);
-
+gameController.playRound(0, 0);
 //tic tac toe:
 
 // choose to be player 1 or player 2- player 1 is X and player 2 is O; player 1 goes first when they select a place to put an X, the cell object value should be X so Cell.Value(activePlayer.move).
