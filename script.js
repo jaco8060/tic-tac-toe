@@ -20,19 +20,24 @@ const Gameboard = (function () {
   };
 
   const checkAvailableCells = () => {
+    let availableCells = false;
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         if (board[i][j].getValue() == 0) {
-          return true;
+          availableCells = true;
+          return availableCells;
         }
       }
     }
+    return availableCells;
   };
   //function for player making a move and the board updating:
 
   const playerMove = (row, column, player) => {
     const availableCells = checkAvailableCells();
+    console.log(availableCells);
     if (availableCells === false) {
+      console.log("Game Over");
       return -1;
     }
 
@@ -103,6 +108,17 @@ const gameController = (function (
 })();
 gameController.playRound(0, 0);
 gameController.playRound(0, 1);
+gameController.playRound(0, 2);
+gameController.playRound(1, 0);
+gameController.playRound(1, 1);
+gameController.playRound(1, 2);
+gameController.playRound(2, 0);
+gameController.playRound(2, 1);
+gameController.playRound(2, 2);
+gameController.playRound(2, 2);
+gameController.playRound(2, 2);
+gameController.playRound(2, 2);
+gameController.playRound(2, 2);
 //tic tac toe:
 
 // choose to be player 1 or player 2- player 1 is X and player 2 is O; player 1 goes first when they select a place to put an X, the cell object value should be X so Cell.Value(activePlayer.move).
