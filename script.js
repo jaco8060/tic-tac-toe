@@ -40,12 +40,14 @@ const Gameboard = (function () {
       console.log("Game Over: No more available moves.");
       return -1; // Indicating the game is over/tied
     }
-    // check rows
+    //check diagonals
+
+    // check rows/columns for 3 in a row
     for (let i = 0; i < 3; i++) {
       //check if there are 3 rows in a row for a winner
       if (
         board[i][1].getValue() === board[i][2].getValue() &&
-        board[i][2].getValue === board[i][3].getValue &&
+        board[i][2].getValue() === board[i][3].getValue() &&
         board[i][1] != 0 &&
         board[i][2] != 0 &&
         board[i][3] != 0
@@ -60,7 +62,7 @@ const Gameboard = (function () {
       //check if there are 3 column values in a row for a winner
       else if (
         board[1][i].getValue() === board[2][i].getValue() &&
-        board[2][i].getValue === board[3][i].getValue &&
+        board[2][i].getValue() === board[3][i].getValue() &&
         board[1][i] != 0 &&
         board[2][i] != 0 &&
         board[3][i] != 0
@@ -79,10 +81,12 @@ const Gameboard = (function () {
   const playerMove = (row, column, player) => {
     if (board[row][column].getValue() === 0) {
       board[row][column].playerMove(player);
+    } else {
+      return;
     }
   };
 
-  return { getBoard, printBoard, playerMove, checkAvailableCells };
+  return { getBoard, printBoard, playerMove, checkAvailableCells, checkForWin };
 })();
 
 // A cell represents a square on the board and has the value of the player assigned to it. If Cell value is 0 (default) then no moves were made on that cell, and if the cell is 1 then player 1's move has made
@@ -131,7 +135,7 @@ const gameController = (function (
         getActivePlayer().playerName
       } has selected row ${row} and column ${column}`
     );
-    //check if its a valid move
+    //check first for winner/if its a valid move
     if (Gameboard.playerMove(row, column, getActivePlayer()) != -1) {
       switchPlayerTurn();
       printNewRound();
