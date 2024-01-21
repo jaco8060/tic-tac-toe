@@ -31,6 +31,43 @@ const Gameboard = (function () {
     }
     return availableCells;
   };
+
+  //function that returns the winning player
+  const checkForWin = (player1, player2) => {
+    // check rows
+    for (let i = 0; i < 3; i++) {
+      //check if there are 3 rows in a row for a winner
+      if (
+        board[i][1].getValue() === board[i][2].getValue() &&
+        board[i][2].getValue === board[i][3].getValue &&
+        board[i][1] != 0 &&
+        board[i][2] != 0 &&
+        board[i][3] != 0
+      ) {
+        if (board[i][1].getValue() === "X") {
+          return player1;
+        } else {
+          //if there are 3 O's in a row
+          return player2;
+        }
+      }
+      //check if there are 3 column values in a row for a winner
+      else if (
+        board[1][i].getValue() === board[2][i].getValue() &&
+        board[2][i].getValue === board[3][i].getValue &&
+        board[1][i] != 0 &&
+        board[2][i] != 0 &&
+        board[3][i] != 0
+      ) {
+        if (board[1][i].getValue() === "X") {
+          return player1;
+        } else {
+          //if there are 3 O's in a row
+          return player2;
+        }
+      }
+    }
+  };
   //function for player making a move and the board updating:
 
   const playerMove = (row, column, player) => {
