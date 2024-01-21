@@ -19,12 +19,22 @@ const Gameboard = (function () {
     console.log(boardWithValues);
   };
 
+  const checkAvailableCells = () => {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (board[i][j].getValue() == 0) {
+          return true;
+        }
+      }
+    }
+  };
   //function for player making a move and the board updating:
 
   const playerMove = (row, column, player) => {
-    const availableCells = board
-      .filter((row) => row[column].getValue() === 0)
-      .map((row) => row[column]);
+    const availableCells = checkAvailableCells();
+    if (availableCells === false) {
+      return -1;
+    }
 
     if (board[row][column].getValue() === 0) {
       board[row][column].playerMove(player);
@@ -33,7 +43,7 @@ const Gameboard = (function () {
     }
   };
 
-  return { getBoard, printBoard, playerMove };
+  return { getBoard, printBoard, playerMove, checkAvailableCells };
 })();
 
 // A cell represents a square on the board and has the value of the player assigned to it. If Cell value is 0 (default) then no moves were made on that cell, and if the cell is 1 then player 1's move has made
@@ -92,7 +102,7 @@ const gameController = (function (
   return { getActivePlayer, playRound };
 })();
 gameController.playRound(0, 0);
-gameController.playRound(0, 0);
+gameController.playRound(0, 1);
 //tic tac toe:
 
 // choose to be player 1 or player 2- player 1 is X and player 2 is O; player 1 goes first when they select a place to put an X, the cell object value should be X so Cell.Value(activePlayer.move).
