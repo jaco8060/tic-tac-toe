@@ -34,6 +34,12 @@ const Gameboard = (function () {
 
   //function that returns the winning player
   const checkForWin = (player1, player2) => {
+    // Check for available cells after making a move
+    const availableCells = checkAvailableCells();
+    if (!availableCells) {
+      console.log("Game Over: No more available moves.");
+      return -1; // Indicating the game is over/tied
+    }
     // check rows
     for (let i = 0; i < 3; i++) {
       //check if there are 3 rows in a row for a winner
@@ -73,16 +79,6 @@ const Gameboard = (function () {
   const playerMove = (row, column, player) => {
     if (board[row][column].getValue() === 0) {
       board[row][column].playerMove(player);
-
-      // Check for available cells after making a move
-      const availableCells = checkAvailableCells();
-      if (!availableCells) {
-        console.log("Game Over: No more available moves.");
-        return -1; // Indicating the game is over
-      }
-    } else {
-      console.log("Cell is already occupied. Please choose another cell.");
-      return -1; // Indicating an invalid move
     }
   };
 
