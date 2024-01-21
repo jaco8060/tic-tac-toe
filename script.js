@@ -34,17 +34,18 @@ const Gameboard = (function () {
   //function for player making a move and the board updating:
 
   const playerMove = (row, column, player) => {
-    const availableCells = checkAvailableCells();
-    console.log(availableCells);
-    if (availableCells === false) {
-      console.log("Game Over");
-      return -1;
-    }
-
     if (board[row][column].getValue() === 0) {
       board[row][column].playerMove(player);
+
+      // Check for available cells after making a move
+      const availableCells = checkAvailableCells();
+      if (!availableCells) {
+        console.log("Game Over: No more available moves.");
+        return -1; // Indicating the game is over
+      }
     } else {
-      return -1;
+      console.log("Cell is already occupied. Please choose another cell.");
+      return -1; // Indicating an invalid move
     }
   };
 
