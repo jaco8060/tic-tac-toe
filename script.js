@@ -24,6 +24,8 @@ const Gameboard = (function () {
   const playerMove = (row, column, player) => {
     if (board[row][column].getValue() === 0) {
       board[row][column].playerMove(player);
+    } else {
+      return;
     }
   };
 
@@ -65,11 +67,26 @@ const gameController = (function (
 
   const getActivePlayer = () => activePlayer;
 
-  const playRound = (row, column, player) => {};
+  const printNewRound = () => {
+    Gameboard.printBoard();
+    console.log(`${getActivePlayer().playerName}'s turn.`);
+  };
 
-  return { switchPlayerTurn, getActivePlayer };
+  const playRound = (row, column) => {
+    console.log(
+      `${
+        getActivePlayer().playerName
+      } has selected row ${row} and column ${column}`
+    );
+    Gameboard.playerMove(row, column, getActivePlayer());
+
+    switchPlayerTurn();
+    printNewRound();
+  };
+
+  return { getActivePlayer, playRound };
 })();
-Gameboard.printBoard();
+gameController.playRound(0, 0);
 
 //tic tac toe:
 
