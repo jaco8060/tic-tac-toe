@@ -43,8 +43,8 @@ const Gameboard = (function () {
   const checkForWin = (player1, player2) => {
     //check diagonals
     if (
-      (board[0][0].getValue() === board[1][1].getValue().move &&
-        board[1][1].getValue() === board[2][2].getValue().move &&
+      (board[0][0].getValue().move === board[1][1].getValue().move &&
+        board[1][1].getValue().move === board[2][2].getValue().move &&
         board[0][0] != 0) ||
       (board[0][2].getValue().move === board[1][1].getValue().move &&
         board[1][1].getValue().move === board[2][0].getValue().move &&
@@ -60,7 +60,7 @@ const Gameboard = (function () {
     // check rows/columns for 3 in a row
     for (let i = 0; i < 3; i++) {
       //check if there are 3 rows in a row for a winner
-      console.log(board[i][0].getValue());
+
       if (
         board[i][0].getValue().move === board[i][1].getValue().move &&
         board[i][1].getValue().move === board[i][2].getValue().move &&
