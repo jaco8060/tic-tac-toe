@@ -178,9 +178,16 @@ const gameController = (function (
   return { getActivePlayer, playRound };
 })();
 
-// const displayController(function () {
+const displayController(function () {
 
-// })();
+  
+
+  const board_squares = document.querySelectorAll(".square button");
+    board_squares.forEach((square) =>{
+      square.addEventListener('click', playRound())
+    })
+  
+})();
 gameController.playRound(0, 0);
 gameController.playRound(0, 2);
 gameController.playRound(1, 0);
