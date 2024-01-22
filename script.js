@@ -179,11 +179,14 @@ const gameController = (function () {
       console.log(`The winner is ${winner.playerName}`);
       // displayController.resetDisplayBoard();
       Gameboard.resetBoard();
-      // add "start new game?" button
+      // displayController.resetDisplayBoard();
+      displayController.switchDisplays("reset");
       return;
     } else if (!availableCells) {
       console.log("Game Over: Tie Game");
-      displayController.resetDisplayBoard();
+      // displayController.resetDisplayBoard();
+
+      displayController.switchDisplays("reset");
       Gameboard.resetBoard();
       return; // Indicating the game is over/tied
     } else {
@@ -242,7 +245,7 @@ const displayController = (function () {
 
     startGameButton.addEventListener("click", (e) => {
       e.preventDefault();
-      const playerOneName = player1Input.value || "Player One";
+      const playerOneName = player1Input.value || "Player One"; //set default names if no input is given
       const playerTwoName = player2Input.value || "Player Two";
       gameController.setPlayerNames(playerOneName, playerTwoName);
       displayController.setupSquares();
@@ -253,10 +256,17 @@ const displayController = (function () {
   const switchDisplays = (gameState) => {
     const startGameWindow = document.querySelector(".user-selection");
     const gameBoardWindow = document.querySelector(".game-board");
-
+    const gameMessage = document.querySelector(".gameResults");
+    const resetButton = document.getElementById("gameResetButton");
     if (gameState === "start") {
       startGameWindow.style.display = "none";
       gameBoardWindow.style.display = "grid";
+      gameMessage.style.display = "flex";
+    } else if (gameState === "reset") {
+      startGameWindow.style.display = "flex";
+      gameBoardWindow.style.display = "none";
+      resetButton.style.display = "block";
+      resetDisplayBoard();
     }
   };
 

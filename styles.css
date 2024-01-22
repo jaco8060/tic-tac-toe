@@ -54,6 +54,7 @@ table {
     --input-font: 1rem;
     --heading-font: 4rem;
     --game-board-size: 22rem;
+    --reset-font: 2rem;
 }
 
 .user-selection {
@@ -150,5 +151,30 @@ form{
 .square img {
     width: 100%;
     height: 4rem;
+}
+
+
+.gameResults {
+    width: 50rem;
+    padding: 1rem;
+    font-family: 'Roboto', sans-serif;
+    display: none;
+    margin: 1rem auto ;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+#gameResetButton {
+    height: 5rem;
+    width: 15rem;
+    background-color: brown;
+    border-style: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: var(--reset-font);
+    display: none;
+    
 }
 

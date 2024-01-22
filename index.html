@@ -11,14 +11,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@500&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
     <h1 class="title">Tic-Tac-Toe</h1>
-    
-    </div>
     <div class="user-selection">
       <h1>User Selection</h1>
       <form id="game-start">
@@ -80,8 +78,21 @@
         <button data-rowcol="22"></button>
       </div>
     </div>
-
-    
+    <div class="gameResults">
+      <p class="gameMessage">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus,
+        quo a maxime sit amet cum molestiae illum iusto atque consequatur
+        placeat inventore nobis quia ducimus voluptatibus voluptas et. Odit,
+        sed.
+      </p>
+      <input
+        type="button"
+        name="resetGame"
+        id="gameResetButton"
+        value="Reset Game"
+        form="game-start"
+      />
+    </div>
 
     <script src="script.js" async defer></script>
   </body>
