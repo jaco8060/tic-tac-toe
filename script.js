@@ -140,6 +140,10 @@ const gameController = (function () {
 
   let activePlayer = player1;
 
+  const resetGameState = () => {
+    activePlayer = player1;
+  };
+
   //function used to switch the current player turn
   const switchPlayerTurn = () => {
     if (activePlayer === player1) {
@@ -180,39 +184,42 @@ const gameController = (function () {
     if (winner) {
       console.log(`The winner is ${winner.playerName}`);
       displayController.updateGameMessage(null, null, "win", winner.playerName); //display the winner to game message
-      Gameboard.resetBoard();
-      displayController.switchDisplays("reset");
+      displayController.resetGame();
       return;
     } else if (!availableCells) {
       console.log("Game Over: Tie Game");
       displayController.updateGameMessage(null, null, "tie", null);
-      Gameboard.resetBoard();
-      displayController.switchDisplays("reset");
+      displayController.resetGame();
       return; // Indicating the game is over/tied
     } else {
       switchPlayerTurn();
       printNewRound();
     }
   };
-  return { getActivePlayer, playRound, setPlayerNames };
+  return { getActivePlayer, playRound, setPlayerNames, resetGameState };
 })();
 
 const displayController = (function () {
   const setupSquares = () => {
     const board_squares = document.querySelectorAll(".square button");
     board_squares.forEach((square) => {
-      square.addEventListener("click", (e) => {
-        const square = e.currentTarget;
-        //extract the row and column from the data attribute in each button
-        const row = parseInt(square.dataset.rowcol.slice(0, 1), 10);
-        const col = parseInt(square.dataset.rowcol.slice(1, 2), 10);
-
-        //make a player move using the row and col
-        gameController.playRound(row, col, square);
-      });
+      square.addEventListener("click", handleSquareClick);
     });
   };
+  function handleSquareClick(e) {
+    const square = e.currentTarget;
+    const row = parseInt(square.dataset.rowcol.slice(0, 1), 10);
+    const col = parseInt(square.dataset.rowcol.slice(1, 2), 10);
 
+    gameController.playRound(row, col, square);
+  }
+  // When you need to remove the event listener
+  const removeSquareEventListeners = () => {
+    const board_squares = document.querySelectorAll(".square button");
+    board_squares.forEach((square) => {
+      square.removeEventListener("click", handleSquareClick);
+    });
+  };
   const updateDisplayBoard = (player, square) => {
     const displayO = document.createElement("img");
 
@@ -258,6 +265,7 @@ const displayController = (function () {
     const gameBoardWindow = document.querySelector(".game-board");
     const gameMessage = document.querySelector(".gameResults");
     const resetButton = document.getElementById("gameResetButton");
+    const gameResults = document.querySelector(".gameResults");
     if (gameState === "start") {
       startGameWindow.style.display = "none";
       gameBoardWindow.style.display = "grid";
@@ -265,9 +273,21 @@ const displayController = (function () {
     } else if (gameState === "reset") {
       startGameWindow.style.display = "flex";
       gameBoardWindow.style.display = "none";
-      resetButton.style.display = "block";
+      resetButton.style.display = "none";
+      gameResults.style.display = "none";
       resetDisplayBoard();
     }
+  };
+  const resetGame = () => {
+    const resetButton = document.getElementById("gameResetButton");
+    const gameMessage = document.querySelector(".gameMessage");
+    resetButton.style.display = "block";
+    removeSquareEventListeners();
+    resetButton.addEventListener("click", () => {
+      switchDisplays("reset");
+      gameMessage.textContent = "";
+      Gameboard.resetBoard();
+    });
   };
 
   const updateGameMessage = (row, column, state, winner) => {
@@ -278,7 +298,7 @@ const displayController = (function () {
         "Cell is already occupied. Please choose another cell.";
     } else if (state === "select") {
       gameMessage.textContent = `${
-        getActivePlayer().playerName
+        gameController.getActivePlayer().playerName
       } has selected row ${row} and column ${column}`;
     } else if (state === "win") {
       gameMessage.textContent = `The winner is ${winner}`;
@@ -294,6 +314,9 @@ const displayController = (function () {
     startGame,
     switchDisplays,
     updateGameMessage,
+    resetGame,
+    handleSquareClick,
+    removeSquareEventListeners,
   };
 })();
 displayController.startGame();
