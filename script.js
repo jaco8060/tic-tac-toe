@@ -224,7 +224,16 @@ const displayController = (function () {
       square.appendChild(displayO);
     }
   };
-  return { setupSquares, squareSetup, updateDisplayBoard };
+
+  const resetDisplayBoard = () => {
+    const board_squares = document.querySelectorAll(".square button");
+    board_squares.forEach((square) => {
+      const displayMove = document.querySelector("img");
+      displayMove.remove();
+    });
+  };
+
+  return { setupSquares, squareSetup, updateDisplayBoard, resetDisplayBoard };
 })();
 displayController.setupSquares();
 //tic tac toe:
