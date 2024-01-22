@@ -42,7 +42,23 @@ const Gameboard = (function () {
   //function that returns the winning player
   const checkForWin = (player1, player2) => {
     //check diagonals
-
+    if (
+      (board[0][0].getValue().move === board[1][1].getValue().move &&
+        board[1][1].getValue().move === board[2][2].getValue().move &&
+        board[0][0] != 0) ||
+      (board[0][2].getValue().move === board[1][1].getValue().move &&
+        board[1][1].getValue().move === board[2][2].getValue().move &&
+        board[1][1] != 0)
+    ) {
+      if (board[1][1].getValue().move === "X") {
+        return player1;
+      } else if (board[1][1].getValue().move === "O") {
+        //if there are 3 O's in a row
+        return player2;
+      } else {
+        return;
+      }
+    }
     // check rows/columns for 3 in a row
     for (let i = 0; i < 3; i++) {
       //check if there are 3 rows in a row for a winner
@@ -143,16 +159,16 @@ const gameController = (function (
   };
 
   const playRound = (row, column) => {
-    // Check if the selected cell is already occupied
-    if (Gameboard.getBoard()[row][column].getValue() !== 0) {
-      console.log("Cell is already occupied. Please choose another cell.");
-      return;
-    }
     // Check for available cells to check for tie game
     const availableCells = Gameboard.checkAvailableCells();
     if (!availableCells) {
       console.log("Game Over: Tie Game");
       return; // Indicating the game is over/tied
+    }
+    // Check if the selected cell is already occupied
+    if (Gameboard.getBoard()[row][column].getValue() !== 0) {
+      console.log("Cell is already occupied. Please choose another cell.");
+      return;
     }
     //print current move
     console.log(
