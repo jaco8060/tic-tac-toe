@@ -180,8 +180,9 @@ const gameController = (function (
     const availableCells = Gameboard.checkAvailableCells();
     if (winner) {
       console.log(`The winner is ${winner.playerName}`);
-      displayController.resetDisplayBoard();
+      // displayController.resetDisplayBoard();
       Gameboard.resetBoard();
+      // add "start new game?" button
       return;
     } else if (!availableCells) {
       console.log("Game Over: Tie Game");
