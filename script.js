@@ -180,10 +180,12 @@ const gameController = (function (
     const availableCells = Gameboard.checkAvailableCells();
     if (winner) {
       console.log(`The winner is ${winner.playerName}`);
+      displayController.resetDisplayBoard();
       Gameboard.resetBoard();
       return;
     } else if (!availableCells) {
       console.log("Game Over: Tie Game");
+      displayController.resetDisplayBoard();
       Gameboard.resetBoard();
       return; // Indicating the game is over/tied
     } else {
@@ -229,7 +231,10 @@ const displayController = (function () {
     const board_squares = document.querySelectorAll(".square button");
     board_squares.forEach((square) => {
       const displayMove = document.querySelector("img");
-      displayMove.remove();
+      if (displayMove) {
+        //if there is an image in the div
+        displayMove.remove();
+      }
     });
   };
 
