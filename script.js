@@ -31,7 +31,14 @@ const Gameboard = (function () {
     }
     return availableCells;
   };
-
+  const resetBoard = () => {
+    for (let i = 0; i < rows; i++) {
+      board[i] = []; //create an array for each row
+      for (let j = 0; j < cols; j++) {
+        board[i].push(Cell()); //place a cell object in each cell and append cell to array
+      }
+    }
+  };
   //function that returns the winning player
   const checkForWin = (player1, player2) => {
     //check diagonals
@@ -85,7 +92,14 @@ const Gameboard = (function () {
     }
   };
 
-  return { getBoard, printBoard, Move, checkAvailableCells, checkForWin };
+  return {
+    getBoard,
+    printBoard,
+    Move,
+    checkAvailableCells,
+    checkForWin,
+    resetBoard,
+  };
 })();
 
 // A cell represents a square on the board and has the value of the player assigned to it. If Cell value is 0 (default) then no moves were made on that cell, and if the cell is 1 then player 1's move has made
@@ -150,11 +164,11 @@ const gameController = (function (
     Gameboard.Move(row, column, getActivePlayer());
 
     //check first for winner/if its a valid move
-
     const winner = Gameboard.checkForWin(player1, player2);
 
     if (winner) {
       console.log(`The winner is ${winner.playerName}`);
+      Gameboard.resetBoard();
       return;
     } else {
       switchPlayerTurn();
@@ -168,6 +182,7 @@ gameController.playRound(0, 2);
 gameController.playRound(1, 0);
 gameController.playRound(1, 0);
 gameController.playRound(2, 2);
+gameController.playRound(2, 0);
 gameController.playRound(2, 0);
 
 //tic tac toe:
