@@ -33,7 +33,7 @@ const Gameboard = (function () {
   };
 
   //function that returns the winning player
-  const checkForWin = (player) => {
+  const checkForWin = (player1, player2) => {
     //check diagonals
 
     // check rows/columns for 3 in a row
@@ -135,24 +135,28 @@ const gameController = (function (
       return;
     }
     // Check for available cells to check for tie game
-    const availableCells = checkAvailableCells();
+    const availableCells = Gameboard.checkAvailableCells();
     if (!availableCells) {
       console.log("Game Over: Tie Game");
       return; // Indicating the game is over/tied
     }
+    //print current move
     console.log(
       `${
         getActivePlayer().playerName
       } has selected row ${row} and column ${column}`
     );
+    // Make the move
+    Gameboard.Move(row, column, getActivePlayer());
+
     //check first for winner/if its a valid move
+
     const winner = Gameboard.checkForWin(player1, player2);
 
     if (winner) {
-      console.log(`The winner is ${winner}`);
+      console.log(`The winner is ${winner.playerName}`);
       return;
-    } else if (winner != -1) {
-      Gameboard.Move(row, column, getActivePlayer());
+    } else {
       switchPlayerTurn();
       printNewRound();
     }
