@@ -85,6 +85,9 @@ table {
     align-items: center;
     justify-content: center;
 }
+.square button:hover{
+    background-color: rgb(195, 176, 152);
+}
 
 .square img {
     width: 100%;
