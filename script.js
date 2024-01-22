@@ -87,9 +87,9 @@ const Gameboard = (function () {
         board[1][i] != 0 &&
         board[2][i] != 0
       ) {
-        if (board[1][i].getValue().move === "X") {
+        if (board[0][i].getValue().move === "X") {
           return player1;
-        } else if (board[i][1].getValue().move === "O") {
+        } else if (board[0][i].getValue().move === "O") {
           //if there are 3 O's in a row
           return player2;
         } else {
@@ -212,10 +212,16 @@ const displayController = (function () {
   };
 
   const updateDisplayBoard = (player, square) => {
-    const displayX = document.createElement("img");
     const displayO = document.createElement("img");
 
     if (player.move === "X") {
+      const displayX = document.createElement("img");
+      displayX.src = "img/X.svg";
+      square.appendChild(displayX);
+    } else if (player.move === "O") {
+      const displayO = document.createElement("img");
+      displayO.src = "img/O.svg";
+      square.appendChild(displayO);
     }
   };
   return { setupSquares, squareSetup, updateDisplayBoard };
