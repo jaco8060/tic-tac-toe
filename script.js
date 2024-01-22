@@ -178,24 +178,25 @@ const gameController = (function (
   return { getActivePlayer, playRound };
 })();
 
-const displayController(function () {
+const displayController = (function () {
+  const setupSquares = () => {
+    const board_squares = document.querySelectorAll(".square button");
+    board_squares.forEach((square) => {
+      square.addEventListener("click", displayController.squareSetup);
+    });
+  };
+  const squareSetup = (e) => {
+    //extract the row and column from the data attribute in each button
+    const row = parseInt(e.currentTarget.dataset.rowcol.slice(0, 1), 10);
+    const col = parseInt(e.currentTarget.dataset.rowcol.slice(1, 2), 10);
 
-  
+    //make a player move using the row and col
+    gameController.playRound(row, col);
+  };
 
-  const board_squares = document.querySelectorAll(".square button");
-    board_squares.forEach((square) =>{
-      square.addEventListener('click', playRound())
-    })
-  
+  return { setupSquares, squareSetup };
 })();
-gameController.playRound(0, 0);
-gameController.playRound(0, 2);
-gameController.playRound(1, 0);
-gameController.playRound(1, 0);
-gameController.playRound(2, 2);
-gameController.playRound(2, 0);
-gameController.playRound(2, 0);
-
+displayController.setupSquares();
 //tic tac toe:
 
 // choose to be player 1 or player 2- player 1 is X and player 2 is O; player 1 goes first when they select a place to put an X, the cell object value should be X so Cell.Value(activePlayer.move).
