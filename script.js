@@ -159,12 +159,6 @@ const gameController = (function (
   };
 
   const playRound = (row, column) => {
-    // Check for available cells to check for tie game
-    const availableCells = Gameboard.checkAvailableCells();
-    if (!availableCells) {
-      console.log("Game Over: Tie Game");
-      return; // Indicating the game is over/tied
-    }
     // Check if the selected cell is already occupied
     if (Gameboard.getBoard()[row][column].getValue() !== 0) {
       console.log("Cell is already occupied. Please choose another cell.");
@@ -181,11 +175,16 @@ const gameController = (function (
 
     //check first for winner/if its a valid move
     const winner = Gameboard.checkForWin(player1, player2);
-
+    // Check for available cells to check for tie game
+    const availableCells = Gameboard.checkAvailableCells();
     if (winner) {
       console.log(`The winner is ${winner.playerName}`);
       Gameboard.resetBoard();
       return;
+    } else if (!availableCells) {
+      console.log("Game Over: Tie Game");
+      Gameboard.resetBoard();
+      return; // Indicating the game is over/tied
     } else {
       switchPlayerTurn();
       printNewRound();
