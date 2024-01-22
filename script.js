@@ -100,9 +100,10 @@ const Gameboard = (function () {
   };
   //function for player making a move and the board updating:
 
-  const Move = (row, column, player) => {
+  const Move = (row, column, player, square) => {
     if (board[row][column].getValue() === 0) {
       board[row][column].playerMove(player);
+      displayController.updateDisplayBoard(player, square);
     } else {
       return;
     }
@@ -158,7 +159,7 @@ const gameController = (function (
     console.log(`${getActivePlayer().playerName}'s turn.`);
   };
 
-  const playRound = (row, column) => {
+  const playRound = (row, column, square) => {
     // Check if the selected cell is already occupied
     if (Gameboard.getBoard()[row][column].getValue() !== 0) {
       console.log("Cell is already occupied. Please choose another cell.");
@@ -171,7 +172,7 @@ const gameController = (function (
       } has selected row ${row} and column ${column}`
     );
     // Make the move
-    Gameboard.Move(row, column, getActivePlayer());
+    Gameboard.Move(row, column, getActivePlayer(), square);
 
     //check first for winner/if its a valid move
     const winner = Gameboard.checkForWin(player1, player2);
@@ -201,15 +202,23 @@ const displayController = (function () {
     });
   };
   const squareSetup = (e) => {
+    const square = e.currentTarget;
     //extract the row and column from the data attribute in each button
-    const row = parseInt(e.currentTarget.dataset.rowcol.slice(0, 1), 10);
-    const col = parseInt(e.currentTarget.dataset.rowcol.slice(1, 2), 10);
+    const row = parseInt(square.dataset.rowcol.slice(0, 1), 10);
+    const col = parseInt(square.dataset.rowcol.slice(1, 2), 10);
 
     //make a player move using the row and col
-    gameController.playRound(row, col);
+    gameController.playRound(row, col, square);
   };
 
-  return { setupSquares, squareSetup };
+  const updateDisplayBoard = (player, square) => {
+    const displayX = document.createElement("img");
+    const displayO = document.createElement("img");
+
+    if (player.move === "X") {
+    }
+  };
+  return { setupSquares, squareSetup, updateDisplayBoard };
 })();
 displayController.setupSquares();
 //tic tac toe:
