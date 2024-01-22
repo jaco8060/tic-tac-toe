@@ -45,12 +45,13 @@ const Gameboard = (function () {
     // check rows/columns for 3 in a row
     for (let i = 0; i < 3; i++) {
       //check if there are 3 rows in a row for a winner
+      console.log();
       if (
+        board[i][0].getValue() === board[i][1].getValue() &&
         board[i][1].getValue() === board[i][2].getValue() &&
-        board[i][2].getValue() === board[i][3].getValue() &&
+        board[i][0] != 0 &&
         board[i][1] != 0 &&
-        board[i][2] != 0 &&
-        board[i][3] != 0
+        board[i][2] != 0
       ) {
         if (board[i][1].getValue() === "X") {
           return player1;
@@ -61,11 +62,11 @@ const Gameboard = (function () {
       }
       //check if there are 3 column values in a row for a winner
       else if (
+        board[0][i].getValue() === board[1][i].getValue() &&
         board[1][i].getValue() === board[2][i].getValue() &&
-        board[2][i].getValue() === board[3][i].getValue() &&
+        board[0][i] != 0 &&
         board[1][i] != 0 &&
-        board[2][i] != 0 &&
-        board[3][i] != 0
+        board[2][i] != 0
       ) {
         if (board[1][i].getValue() === "X") {
           return player1;
@@ -136,7 +137,8 @@ const gameController = (function (
       } has selected row ${row} and column ${column}`
     );
     //check first for winner/if its a valid move
-    if (Gameboard.playerMove(row, column, getActivePlayer()) != -1) {
+    if (Gameboard.checkForWin(player1, player2) != -1) {
+      Gameboard.playerMove(row, column, getActivePlayer());
       switchPlayerTurn();
       printNewRound();
     }
@@ -144,19 +146,12 @@ const gameController = (function (
 
   return { getActivePlayer, playRound };
 })();
-gameController.playRound(0, 0);
 gameController.playRound(0, 1);
-gameController.playRound(0, 2);
 gameController.playRound(1, 0);
+gameController.playRound(0, 2);
 gameController.playRound(1, 1);
-gameController.playRound(1, 2);
-gameController.playRound(2, 0);
-gameController.playRound(2, 1);
-gameController.playRound(2, 2);
-gameController.playRound(2, 2);
-gameController.playRound(2, 2);
-gameController.playRound(2, 2);
-gameController.playRound(2, 2);
+gameController.playRound(0, 3);
+
 //tic tac toe:
 
 // choose to be player 1 or player 2- player 1 is X and player 2 is O; player 1 goes first when they select a place to put an X, the cell object value should be X so Cell.Value(activePlayer.move).
