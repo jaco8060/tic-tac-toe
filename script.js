@@ -33,53 +33,51 @@ const Gameboard = (function () {
   };
 
   //function that returns the winning player
-  const checkForWin = (player1, player2) => {
-    // Check for available cells after making a move
-    const availableCells = checkAvailableCells();
-    if (!availableCells) {
-      console.log("Game Over: No more available moves.");
-      return -1; // Indicating the game is over/tied
-    }
+  const checkForWin = (player) => {
     //check diagonals
 
     // check rows/columns for 3 in a row
     for (let i = 0; i < 3; i++) {
       //check if there are 3 rows in a row for a winner
-      console.log();
+
       if (
-        board[i][0].getValue() === board[i][1].getValue() &&
-        board[i][1].getValue() === board[i][2].getValue() &&
+        board[i][0].getValue().move === board[i][1].getValue().move &&
+        board[i][1].getValue().move === board[i][2].getValue().move &&
         board[i][0] != 0 &&
         board[i][1] != 0 &&
         board[i][2] != 0
       ) {
-        if (board[i][1].getValue() === "X") {
+        if (board[i][1].getValue().move === "X") {
           return player1;
-        } else {
+        } else if (board[i][1].getValue().move === "O") {
           //if there are 3 O's in a row
           return player2;
+        } else {
+          return;
         }
       }
       //check if there are 3 column values in a row for a winner
       else if (
-        board[0][i].getValue() === board[1][i].getValue() &&
-        board[1][i].getValue() === board[2][i].getValue() &&
+        board[0][i].getValue().move === board[1][i].getValue().move &&
+        board[1][i].getValue().move === board[2][i].getValue().move &&
         board[0][i] != 0 &&
         board[1][i] != 0 &&
         board[2][i] != 0
       ) {
-        if (board[1][i].getValue() === "X") {
+        if (board[1][i].getValue().move === "X") {
           return player1;
-        } else {
+        } else if (board[i][1].getValue().move === "O") {
           //if there are 3 O's in a row
           return player2;
+        } else {
+          return;
         }
       }
     }
   };
   //function for player making a move and the board updating:
 
-  const playerMove = (row, column, player) => {
+  const Move = (row, column, player) => {
     if (board[row][column].getValue() === 0) {
       board[row][column].playerMove(player);
     } else {
@@ -87,7 +85,7 @@ const Gameboard = (function () {
     }
   };
 
-  return { getBoard, printBoard, playerMove, checkAvailableCells, checkForWin };
+  return { getBoard, printBoard, Move, checkAvailableCells, checkForWin };
 })();
 
 // A cell represents a square on the board and has the value of the player assigned to it. If Cell value is 0 (default) then no moves were made on that cell, and if the cell is 1 then player 1's move has made
@@ -131,26 +129,42 @@ const gameController = (function (
   };
 
   const playRound = (row, column) => {
+    // Check if the selected cell is already occupied
+    if (Gameboard.getBoard()[row][column].getValue() !== 0) {
+      console.log("Cell is already occupied. Please choose another cell.");
+      return;
+    }
+    // Check for available cells to check for tie game
+    const availableCells = checkAvailableCells();
+    if (!availableCells) {
+      console.log("Game Over: Tie Game");
+      return; // Indicating the game is over/tied
+    }
     console.log(
       `${
         getActivePlayer().playerName
       } has selected row ${row} and column ${column}`
     );
     //check first for winner/if its a valid move
-    if (Gameboard.checkForWin(player1, player2) != -1) {
-      Gameboard.playerMove(row, column, getActivePlayer());
+    const winner = Gameboard.checkForWin(player1, player2);
+
+    if (winner) {
+      console.log(`The winner is ${winner}`);
+      return;
+    } else if (winner != -1) {
+      Gameboard.Move(row, column, getActivePlayer());
       switchPlayerTurn();
       printNewRound();
     }
   };
-
   return { getActivePlayer, playRound };
 })();
-gameController.playRound(0, 1);
-gameController.playRound(1, 0);
+gameController.playRound(0, 0);
 gameController.playRound(0, 2);
-gameController.playRound(1, 1);
-gameController.playRound(0, 3);
+gameController.playRound(1, 0);
+gameController.playRound(1, 0);
+gameController.playRound(2, 2);
+gameController.playRound(2, 0);
 
 //tic tac toe:
 
