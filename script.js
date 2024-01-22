@@ -239,8 +239,25 @@ const displayController = (function () {
     });
   };
 
-  return { setupSquares, squareSetup, updateDisplayBoard, resetDisplayBoard };
+  const startGame = () => {
+    const startGameButton = document.getElementById("gameStartButton");
+    const player1Input = document.querySelector(".player1Input");
+    const player2Input = document.querySelector(".player2Input");
+
+    startGameButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log(e.target.value);
+    });
+  };
+  return {
+    setupSquares,
+    squareSetup,
+    updateDisplayBoard,
+    resetDisplayBoard,
+    startGame,
+  };
 })();
+displayController.startGame();
 displayController.setupSquares();
 //tic tac toe:
 
