@@ -160,6 +160,7 @@ const gameController = (function () {
     // Check if the selected cell is already occupied
     if (Gameboard.getBoard()[row][column].getValue() !== 0) {
       console.log("Cell is already occupied. Please choose another cell.");
+      displayController.updateGameMessage(row, column, "occupied", null);
       return;
     }
     //print current move
@@ -168,6 +169,7 @@ const gameController = (function () {
         getActivePlayer().playerName
       } has selected row ${row} and column ${column}`
     );
+    displayController.updateGameMessage(row, column, "select", null);
     // Make the move
     Gameboard.Move(row, column, getActivePlayer(), square);
 
@@ -177,17 +179,15 @@ const gameController = (function () {
     const availableCells = Gameboard.checkAvailableCells();
     if (winner) {
       console.log(`The winner is ${winner.playerName}`);
-      // displayController.resetDisplayBoard();
+      displayController.updateGameMessage(null, null, "win", winner.playerName); //display the winner to game message
       Gameboard.resetBoard();
-      // displayController.resetDisplayBoard();
       displayController.switchDisplays("reset");
       return;
     } else if (!availableCells) {
       console.log("Game Over: Tie Game");
-      // displayController.resetDisplayBoard();
-
-      displayController.switchDisplays("reset");
+      displayController.updateGameMessage(null, null, "tie", null);
       Gameboard.resetBoard();
+      displayController.switchDisplays("reset");
       return; // Indicating the game is over/tied
     } else {
       switchPlayerTurn();
@@ -270,12 +270,30 @@ const displayController = (function () {
     }
   };
 
+  const updateGameMessage = (row, column, state, winner) => {
+    const gameMessage = document.querySelector(".gameMessage");
+
+    if (state === "occupied") {
+      gameMessage.textContent =
+        "Cell is already occupied. Please choose another cell.";
+    } else if (state === "select") {
+      gameMessage.textContent = `${
+        getActivePlayer().playerName
+      } has selected row ${row} and column ${column}`;
+    } else if (state === "win") {
+      gameMessage.textContent = `The winner is ${winner}`;
+    } else if (state === "tie") {
+      gameMessage.textContent = "Game Over: Tie Game";
+    }
+  };
+
   return {
     setupSquares,
     updateDisplayBoard,
     resetDisplayBoard,
     startGame,
     switchDisplays,
+    updateGameMessage,
   };
 })();
 displayController.startGame();
