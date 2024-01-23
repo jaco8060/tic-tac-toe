@@ -257,6 +257,8 @@ const displayController = (function () {
       gameController.setPlayerNames(playerOneName, playerTwoName);
       displayController.setupSquares();
       switchDisplays("start");
+
+      updateGameMessage(null, null, "start", null);
     });
   };
 
@@ -287,6 +289,7 @@ const displayController = (function () {
       switchDisplays("reset");
       gameMessage.textContent = "";
       Gameboard.resetBoard();
+      gameController.resetGameState();
     });
   };
 
@@ -294,8 +297,7 @@ const displayController = (function () {
     const gameMessage = document.querySelector(".gameMessage");
 
     if (state === "occupied") {
-      gameMessage.textContent =
-        "Cell is already occupied. Please choose another cell.";
+      gameMessage.textContent = `Cell is already occupied. Please choose another cell. ${gameController.getActivePlayer()}'s turn.`;
     } else if (state === "select") {
       gameMessage.textContent = `${
         gameController.getActivePlayer().playerName
@@ -304,6 +306,10 @@ const displayController = (function () {
       gameMessage.textContent = `The winner is ${winner}`;
     } else if (state === "tie") {
       gameMessage.textContent = "Game Over: Tie Game";
+    } else if (state === "start") {
+      gameMessage.textContent = `${
+        gameController.getActivePlayer().playerName
+      }'s turn.`;
     }
   };
 
