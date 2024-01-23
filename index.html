@@ -16,82 +16,78 @@
     />
   </head>
   <body>
-    <h1 class="title">Tic-Tac-Toe</h1>
-    <div class="user-selection">
-      <h1>User Selection</h1>
-      <form id="game-start">
-        <div class="input-container">
-          <h2>Player 1</h2>
+    <div class="main-container">
+      <h1 class="title">Tic-Tac-Toe</h1>
+      <div class="user-selection">
+        <h1>User Selection</h1>
+        <form id="game-start">
+          <div class="input-container">
+            <h2>Player 1</h2>
+            <input
+              type="text"
+              class="input-text player1Input"
+              placeholder="Choose a name for player 1"
+              tabindex="1"
+            />
+          </div>
+          <div class="input-container">
+            <h2>Player 2</h2>
+            <input
+              type="text"
+              class="input-text player2Input"
+              placeholder="Choose a name for player 2"
+              tabindex="2"
+            />
+          </div>
           <input
-            type="text"
-            class="input-text player1Input"
-            placeholder="Choose a name for player 1"
-            tabindex="1"
+            type="submit"
+            name="gameStart"
+            id="gameStartButton"
+            value="Start Game"
+            form="game-start"
+            tabindex="3"
           />
+        </form>
+      </div>
+      <div class="game-board">
+        <div class="square">
+          <button data-rowcol="00"></button>
         </div>
-        <div class="input-container">
-          <h2>Player 2</h2>
-          <input
-            type="text"
-            class="input-text player2Input"
-            placeholder="Choose a name for player 2"
-            tabindex="2"
-          />
+        <div class="square">
+          <button data-rowcol="01"></button>
         </div>
+        <div class="square">
+          <button data-rowcol="02"></button>
+        </div>
+        <div class="square">
+          <button data-rowcol="10"></button>
+        </div>
+        <div class="square">
+          <button data-rowcol="11"></button>
+        </div>
+        <div class="square">
+          <button data-rowcol="12"></button>
+        </div>
+        <div class="square">
+          <button data-rowcol="20"></button>
+        </div>
+        <div class="square">
+          <button data-rowcol="21"></button>
+        </div>
+        <div class="square">
+          <button data-rowcol="22"></button>
+        </div>
+      </div>
+      <div class="gameResults">
+        <p class="gameMessage"></p>
         <input
-          type="submit"
-          name="gameStart"
-          id="gameStartButton"
-          value="Start Game"
+          type="button"
+          name="resetGame"
+          id="gameResetButton"
+          value="Reset Game"
           form="game-start"
-          tabindex="3"
         />
-      </form>
-    </div>
-
-    <div class="game-board">
-      <div class="square">
-        <button data-rowcol="00"></button>
       </div>
-      <div class="square">
-        <button data-rowcol="01"></button>
-      </div>
-      <div class="square">
-        <button data-rowcol="02"></button>
-      </div>
-      <div class="square">
-        <button data-rowcol="10"></button>
-      </div>
-      <div class="square">
-        <button data-rowcol="11"></button>
-      </div>
-      <div class="square">
-        <button data-rowcol="12"></button>
-      </div>
-      <div class="square">
-        <button data-rowcol="20"></button>
-      </div>
-      <div class="square">
-        <button data-rowcol="21"></button>
-      </div>
-      <div class="square">
-        <button data-rowcol="22"></button>
-      </div>
-    </div>
-    <div class="gameResults">
-      <p class="gameMessage">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus,
-        quo a maxime sit amet cum molestiae illum iusto atque consequatur
-        placeat inventore nobis quia ducimus voluptatibus voluptas et. Odit,
-        sed.
-      </p>
-      <input
-        type="button"
-        name="resetGame"
-        id="gameResetButton"
-        value="Reset Game"
-        form="game-start"
-      />
     </div>
 
     <script src="script.js" async defer></script>
