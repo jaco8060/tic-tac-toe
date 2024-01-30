@@ -164,7 +164,7 @@ const gameController = (function () {
     // Check if the selected cell is already occupied
     if (Gameboard.getBoard()[row][column].getValue() !== 0) {
       console.log("Cell is already occupied. Please choose another cell.");
-      displayController.updateGameMessage(row, column, "occupied", null);
+      displayController.updateGameMessage(null, null, "occupied", null);
       return;
     }
     //print current move
@@ -297,7 +297,9 @@ const displayController = (function () {
     const gameMessage = document.querySelector(".gameMessage");
 
     if (state === "occupied") {
-      gameMessage.textContent = `Cell is already occupied. Please choose another cell. ${gameController.getActivePlayer()}'s turn.`;
+      gameMessage.textContent = `Cell is already occupied. Please choose another cell. ${
+        gameController.getActivePlayer().playerName
+      }'s turn.`;
     } else if (state === "select") {
       gameMessage.textContent = `${
         gameController.getActivePlayer().playerName
